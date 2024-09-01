@@ -20,6 +20,21 @@ class ItemRepositoryTest {
     @Autowired
     ItemRepository itemRepository;
 
+    @Test
+    @DisplayName("상품 저장 테스트")
+    public void createItemTest() {
+        Item item = new Item();
+        item.setItemNm("테스트상품");
+        item.setPrice(1000);
+        item.setItemDetail("테스트상품 상세 설명");
+        item.setItemSellStatus(ItemSellStatus.SELL);
+        item.setStockNumber(100);
+        item.setRegTime(LocalDateTime.now());
+        item.setUpdateTime(LocalDateTime.now());
+        Item savedItem = itemRepository.save(item);
+        System.out.println(savedItem.toString());
+    }
+
     public void createItemList(){
         for (int i = 1; i <=10 ; i++) {
             Item item = new Item();
@@ -29,7 +44,7 @@ class ItemRepositoryTest {
             item.setItemSellStatus(ItemSellStatus.SELL);
             item.setStockNumber(100); item.setRegTime(LocalDateTime.now());
             item.setUpdateTime(LocalDateTime.now());
-            itemRepository.save(item);
+            Item savedItem = itemRepository.save(item);
 
         }
     }
@@ -42,16 +57,5 @@ class ItemRepositoryTest {
         for (Item item : itemList){
             System.out.println(item.toString());
         }
-//    public void createItemTest() {
-//        Item item = new Item();
-//        item.setItemNm("테스트상품");
-//        item.setPrice(1000);
-//        item.setItemDetail("테스트상품 상세 설명");
-//        item.setItemSellStatus(ItemSellStatus.SELL);
-//        item.setStockNumber(100);
-//        item.setRegTime(LocalDateTime.now());
-//        item.setUpdateTime(LocalDateTime.now());
-//        Item savedItem = itemRepository.save(item);
-//        System.out.println(savedItem.toString());
-    }
+   }
 }
