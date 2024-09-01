@@ -51,11 +51,22 @@ class ItemRepositoryTest {
 
     @Test
     @DisplayName("상품명 조회 테스트")
-        public void findByItemNmTest(){
-            this.createItemList();
+    public void findByItemNmTest(){
+        this.createItemList();
         List<Item> itemList = itemRepository.findByItemNm("테스트상품1");
         for (Item item : itemList){
             System.out.println(item.toString());
         }
-   }
+    }
+
+    @Test
+    @DisplayName("상품명, 상품상세설명 or 테스트")
+    public void findByItemNmOrItemDetailTest(){
+        this.createItemList();
+        List<Item> itemList=
+                itemRepository.findByItemNmOrItemDetail("테스트상품1","테스트상품성명5");
+        for (Item item : itemList) {
+            System.out.println(item.toString());
+        }
+    }
 }
