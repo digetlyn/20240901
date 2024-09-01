@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -38,7 +39,7 @@ class ItemRepositoryTest {
     public void createItemList(){
         for (int i = 1; i <=10 ; i++) {
             Item item = new Item();
-            item.setItemNm("태스트상품" + i);
+            item.setItemNm("테스트상품" + i);
             item.setPrice(1000 + i);
             item.setItemDetail("테스트상품 상세설명" + i);
             item.setItemSellStatus(ItemSellStatus.SELL);
@@ -68,5 +69,48 @@ class ItemRepositoryTest {
         for (Item item : itemList) {
             System.out.println(item.toString());
         }
+    }
+
+    @Test
+    @DisplayName("가격 LessThan 테스트")
+    public void findByPriceLessThanTest(){
+        this.createItemList();
+        List<Item> itemList = itemRepository.findByPriceLessThan(10005);
+        for (Item item : itemList){
+            System.out.println(item.toString());
+        }
+    }
+
+
+    @Test
+    @DisplayName("가격 내림차순 조회 테스트")
+    public void findByPriceLessThanOrderByPriceDesc(){
+        this.createItemList();
+        List<Item> itemList =
+                itemRepository.findByPriceLessThanOrderByPriceDesc(10005);
+        for (Item item : itemList){
+            System.out.println(item.toString());
+        }
+    }
+
+    @Test
+    @DisplayName("@Query를 이용한 상품 조회 테스트")
+    public void findByItemDetailTest(){
+        this.createItemList();
+        List<Item> itemList = itemRepository.findByItemDetail("테스트 상품 상세 설명");
+        for (Item item : itemList){
+            System.out.println(item.toString());
+        }
+    }
+
+    @Test
+    @DisplayName("nativeQuery 속성을 이용한 상품 조회 테스트")
+    public void findByItemDetailByNative(){
+        this.createItemList();
+        List<Item> itemList=itemRepository.findByItemDetailByNative("테스트상품상세설명");
+            for (Item item:itemList){
+                System.out.println(item.toString());
+            }
+
     }
 }
