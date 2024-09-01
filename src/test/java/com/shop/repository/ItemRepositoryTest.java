@@ -1,13 +1,19 @@
 package com.shop.repository;
 
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.shop.constant.ItemSellStatus;
 import com.shop.entity.Item;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.jpa.repository.query.JpaQueryMethodFactory;
 import org.springframework.test.context.TestPropertySource;
-
+import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.querydsl.jpa.impl.JPAQuery;
+import com.shop.entity.QItem;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -111,6 +117,16 @@ class ItemRepositoryTest {
             for (Item item:itemList){
                 System.out.println(item.toString());
             }
+    }
 
+    @PersistenceContext
+    EntityManager em;
+
+    @Test
+    @DisplayName("Querydsl 조회 테스트1")
+    public void queryDslTest(){
+        this.createItemList();
+        JPAQueryFactory queryFactory = new JPAQueryFactory(em);
+        QItem qItem =QItem.item;
     }
 }
